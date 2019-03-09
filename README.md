@@ -4,9 +4,9 @@ flutter 版本的天气应用
 
 使用的flutter，主要是练习一下flutter的基本布局和https请求和数据库存储。
 
-<img src="img/1.jpg" alt="Drawing" width="250px" />   &nbsp;&nbsp;
-<img src="img/2.jpg" alt="Drawing" width="250px" />   &nbsp;&nbsp;
-<img src="img/3.jpg" alt="Drawing" width="250px" />   &nbsp;&nbsp;
+<img src="img/1.png" alt="Drawing" width="250px" />   &nbsp;&nbsp;
+<img src="img/2.png" alt="Drawing" width="250px" />   &nbsp;&nbsp;
+<img src="img/3.png" alt="Drawing" width="250px" />   &nbsp;&nbsp;
 
 ## 主要使用的一些框架内容
 * [http](https://pub.dartlang.org/packages/http) 
