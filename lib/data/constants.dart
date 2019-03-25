@@ -46,6 +46,11 @@ class AppStyles {
     fontSize: 20.0,
   );
 
+  static const LocationListContentStyle=TextStyle(
+    color: AppColors.WeatherTempTxtColor,
+    fontSize: 14.0,
+  );
+
 }
 
 class Constants {

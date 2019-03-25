@@ -50,16 +50,15 @@ class DataBase {
   }
 
   closeDB() {
-    if (_db != null || _db.isOpen) {
+    if (_db != null ) {
       _db.close();
-      _db = null;
       print("关闭成功！");
     }
   }
 
   insert(BasicListBean localBean) async {
     var dbClient = await db;
-    return dbClient.transaction((trx) {
+    dbClient.transaction((trx) {
       trx.rawInsert('INSERT INTO city(cid,location,parent_city,admin_area,'
           'cnty,lat,lon,tz,type) '
           'VALUES'
@@ -70,16 +69,14 @@ class DataBase {
   Future<List<BasicListBean>> queryAll() async {
     var dbClient = await db;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM city');
-    if (list.length > 0) {
-      return BasicListBean.fromMapList(list);
-    }
-    return null;
+    print(list);
+    List<BasicListBean> basicList = BasicListBean.fromMapList(list);
+    return basicList;
   }
 
   deleteLocation(String cid) async {
     var dbClient = await db;
     int count = await dbClient.rawDelete("delete from city where cid=?", [cid]);
-
     return count;
   }
 }

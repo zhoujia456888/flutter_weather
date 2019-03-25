@@ -4,6 +4,9 @@ import 'package:flutter_weather/data/database_util.dart';
 import 'package:flutter_weather/data/local_bean.dart';
 import 'package:flutter_weather/home/home_screen.dart';
 import 'package:flutter_weather/http/http_manager.dart';
+import 'package:flutter_weather/utils/CityChangeEvent.dart';
+import 'package:rxbus/rxbus.dart';
+
 
 class AddCityPage extends StatefulWidget {
   @override
@@ -151,6 +154,9 @@ class _LocalList extends StatelessWidget {
         DataBase dataBase=new DataBase();
         dataBase.insert(localList[index]);
         Navigator.pop(context);
+
+
+        RxBus.post(CityChangeEvent("添加了城市！！！！"));
 
       },
       child: Container(

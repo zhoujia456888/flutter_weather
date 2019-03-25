@@ -3,6 +3,8 @@ import 'package:flutter_weather/data/constants.dart';
 import 'package:flutter_weather/data/database_util.dart';
 import 'package:flutter_weather/data/local_bean.dart';
 import 'package:flutter_weather/home/addcity_page.dart';
+import 'package:flutter_weather/utils/CityChangeEvent.dart';
+import 'package:rxbus/rxbus.dart';
 
 class CityListPage extends StatefulWidget {
   @override
@@ -24,6 +26,11 @@ class _CityListPageState extends State<CityListPage> {
       setState(() {
         cityList = list;
       });
+    });
+
+    RxBus.register<CityChangeEvent>().listen((event) {
+      print("RxBus传过来的数据 ${event.title}");
+      Navigator.pop(context);
     });
   }
 
@@ -113,32 +120,39 @@ class _CityList extends StatelessWidget {
     final String item = localList[index].cid;
 
     return Dismissible(
-      key: Key(item),
-      direction: DismissDirection.endToStart,
-      onDismissed: (direction) {
-        //localList.removeAt(index);
-        print(new DataBase().deleteLocation(localList[index].cid));
-      },
-      background: Container(
-        color: Colors.red,
-        child: Center(
-          child: Text('删除'),
-        ),
-      ),
-      child: FlatButton(
-        child: Container(
-          padding: const EdgeInsets.only(bottom: 13,top: 13,left: 20,right: 20),
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: AppColors.DividerColor,
-                      width: Constants.Dividerwidth))),
-          child: Row(
-            children: <Widget>[Text('$location,$parent_city,$admin_area,$cnty')],
+        key: Key(item),
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          //localList.removeAt(index);
+          DataBase dataBase = new DataBase();
+          print(dataBase.deleteLocation(localList[index].cid));
+
+          RxBus.post(CityChangeEvent("删除了城市！！！！"));
+        },
+        background: Container(
+          color: Colors.red,
+          child: Center(
+            child: Text('删除'),
           ),
         ),
-      )
-
-    );
+        child: FlatButton(
+          child: Container(
+            padding:
+                const EdgeInsets.only(bottom: 13, top: 13, left: 20, right: 20),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: AppColors.DividerColor,
+                        width: Constants.Dividerwidth))),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  '$location,$parent_city,$admin_area,$cnty',
+                  style: AppStyles.LocationListContentStyle,
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
